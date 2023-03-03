@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "95982546280",
+    "project_id": "wise-app-5e02c",
+    "storage_bucket": "wise-app-5e02c.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:95982546280:android:fbe57ff6c808d57488badd",
+        "android_client_info": {
+          "package_name": "com.example.classroomapp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "95982546280-sf9itnso97do1aiu5qf89st133ljl3ri.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB3SWP58gxE7_R0TgU9GVvnKrVZxWuG-LY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "95982546280-sf9itnso97do1aiu5qf89st133ljl3ri.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
