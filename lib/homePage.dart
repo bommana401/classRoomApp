@@ -1,8 +1,10 @@
-// ignore_for_file: prefer_interpolation_to_compose_strings, use_function_type_syntax_for_parameters
+// ignore_for_file: prefer_interpolation_to_compose_strings, use_function_type_syntax_for_parameters, prefer_const_constructors, prefer_const_literals_to_create_immutables
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+
+import 'announcements/announcementPage.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -73,6 +75,7 @@ class _HomePageState extends State<HomePage> {
         ),
       ),
       // bottom navigation bar.
+
       bottomNavigationBar: BottomNavigationBar(
         items: [
           BottomNavigationBarItem(
@@ -80,8 +83,8 @@ class _HomePageState extends State<HomePage> {
             label: 'Home',
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.search),
-            label: 'Search',
+            icon: Icon(Icons.announcement),
+            label: 'Announcements',
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.person),
@@ -90,7 +93,19 @@ class _HomePageState extends State<HomePage> {
         ],
         selectedItemColor: Colors.blue,
         currentIndex: _selectedIndex,
-        onTap: _onItemTapped,
+        onTap: (index) {
+          if (index == 1) {
+            // check if the Announcements tab is tapped
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => AnnouncementPage()),
+            );
+          }
+          // update the selected index to change the highlighted tab
+          setState(() {
+            _selectedIndex = index;
+          });
+        },
       ),
     );
   }
