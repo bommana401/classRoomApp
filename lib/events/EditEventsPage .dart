@@ -1,33 +1,32 @@
-// ignore_for_file: prefer_const_constructors
-
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 
-class EditAnnouncementPage extends StatefulWidget {
-  final QueryDocumentSnapshot<Object?> announcement;
+class EditEventsPage extends StatefulWidget {
+  final QueryDocumentSnapshot<Object?> event;
 
-  EditAnnouncementPage({required this.announcement});
+  EditEventsPage({required this.event});
 
   @override
-  _EditAnnouncementPageState createState() => _EditAnnouncementPageState();
+  _EditEventsPageState createState() => _EditEventsPageState();
 }
 
-class _EditAnnouncementPageState extends State<EditAnnouncementPage> {
+class _EditEventsPageState extends State<EditEventsPage> {
   final TextEditingController _subjectController = TextEditingController();
   final TextEditingController _descriptionController = TextEditingController();
 
   @override
   void initState() {
     super.initState();
-    _subjectController.text = widget.announcement['subject'];
-    _descriptionController.text = widget.announcement['description'];
+    _subjectController.text = widget.event['subject'];
+    _descriptionController.text = widget.event['description'];
   }
 
+  //need to add time, location to events page.
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Edit Announcement'),
+        title: Text('Edit Event'),
       ),
       body: Padding(
         padding: const EdgeInsets.all(8.0),
@@ -45,10 +44,11 @@ class _EditAnnouncementPageState extends State<EditAnnouncementPage> {
                 hintText: 'Enter your description',
               ),
             ),
+            //need to add a sign up button
             ElevatedButton(
-              child: Text('Update Announcement'),
+              child: Text('Update Event'),
               onPressed: () async {
-                await widget.announcement.reference.update({
+                await widget.event.reference.update({
                   'subject': _subjectController.text,
                   'description': _descriptionController.text,
                   'timestamp': DateTime.now().toUtc(),
@@ -57,9 +57,9 @@ class _EditAnnouncementPageState extends State<EditAnnouncementPage> {
               },
             ),
             ElevatedButton(
-              child: Text('Delete Announcement'),
+              child: Text('Delete Event'),
               onPressed: () async {
-                await widget.announcement.reference.delete();
+                await widget.event.reference.delete();
                 Navigator.pop(context);
               },
             ),

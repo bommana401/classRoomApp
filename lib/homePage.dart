@@ -1,10 +1,13 @@
 // ignore_for_file: prefer_interpolation_to_compose_strings, use_function_type_syntax_for_parameters, prefer_const_constructors, prefer_const_literals_to_create_immutables
 
+import 'package:classroomapp/events/EditEventsPage%20.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
 import 'announcements/announcementPage.dart';
+import 'events/eventsPage.dart';
+import 'profile.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -87,20 +90,44 @@ class _HomePageState extends State<HomePage> {
             label: 'Announcements',
           ),
           BottomNavigationBarItem(
+            icon: Icon(Icons.calendar_today_outlined),
+            label: 'Events',
+          ),
+          BottomNavigationBarItem(
             icon: Icon(Icons.person),
             label: 'Profile',
           ),
         ],
-        selectedItemColor: Colors.blue,
+        unselectedItemColor: Colors.blue,
+        selectedItemColor: Colors.orange,
         currentIndex: _selectedIndex,
         onTap: (index) {
-          if (index == 1) {
+          if (index == 0) {
+            // check if the Announcements tab is tapped
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => HomePage()),
+            );
+          } else if (index == 1) {
             // check if the Announcements tab is tapped
             Navigator.push(
               context,
               MaterialPageRoute(builder: (context) => AnnouncementPage()),
             );
+          } else if (index == 2) {
+            // add this else-if block
+            // checks if profile button is pressed
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => EventsPage()),
+            );
+          } else if (index == 3) {
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => ProfilePage()),
+            );
           }
+
           // update the selected index to change the highlighted tab
           setState(() {
             _selectedIndex = index;

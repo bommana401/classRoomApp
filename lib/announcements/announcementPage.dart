@@ -7,6 +7,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 import 'EditAnnouncementPage .dart';
+import 'package:intl/intl.dart';
 
 class AnnouncementPage extends StatefulWidget {
   const AnnouncementPage({Key? key}) : super(key: key);
@@ -49,6 +50,7 @@ class _AnnouncementPageState extends State<AnnouncementPage> {
         'name': firstName + lastName,
       });
       _subjectController.clear();
+      _descriptionController.clear();
     }
   }
 
@@ -82,20 +84,44 @@ class _AnnouncementPageState extends State<AnnouncementPage> {
                   itemBuilder: (context, index) {
                     final announcement = snapshot.data!.docs[index];
                     return ListTile(
-                      title:
-                          Text(announcement['description']), //this was 'text'
-                      leading: Text(announcement['subject']),
-                      subtitle: Text(firstName + " " + lastName),
-                      trailing:
-                          Text(announcement['timestamp'].toDate().toString()),
+                      title: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Text(announcement['name'] + ":",
+                                    style: TextStyle(
+                                      color: Color.fromARGB(255, 255, 89, 0),
+                                      fontSize: 15,
+                                      fontWeight: FontWeight.bold,
+                                    )),
+                                Text(
+                                  DateFormat.yMd().add_jm().format(
+                                      announcement['timestamp'].toDate()),
+                                  style: TextStyle(
+                                      color: Color.fromARGB(255, 255, 89, 0),
+                                      fontSize: 15),
+                                ),
+                              ]),
+                          SizedBox(height: 4),
+                          Text(announcement['subject'],
+                              style: TextStyle(fontSize: 14)),
+                          SizedBox(height: 4),
+                          Text(announcement['description'],
+                              style: TextStyle(fontSize: 12)),
+                        ],
+                      ),
                       onTap: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => EditAnnouncementPage(
-                                announcement: announcement),
-                          ),
-                        );
+                        if (role == 'Admin') {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => EditAnnouncementPage(
+                                  announcement: announcement),
+                            ),
+                          );
+                        }
                       },
                     );
                   },
@@ -103,37 +129,38 @@ class _AnnouncementPageState extends State<AnnouncementPage> {
               },
             ),
           ),
-          Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: Column(
-              children: [
-                Container(
-                  margin:
-                      const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-                  child: TextField(
-                    controller: _subjectController,
-                    decoration: InputDecoration(
-                      hintText: 'subject',
+          if (role == 'Admin')
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Column(
+                children: [
+                  Container(
+                    margin:
+                        const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+                    child: TextField(
+                      controller: _subjectController,
+                      decoration: InputDecoration(
+                        hintText: 'subject',
+                      ),
                     ),
                   ),
-                ),
-                Container(
-                  margin:
-                      const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-                  child: TextField(
-                    controller: _descriptionController,
-                    decoration: InputDecoration(
-                      hintText: 'description',
+                  Container(
+                    margin:
+                        const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+                    child: TextField(
+                      controller: _descriptionController,
+                      decoration: InputDecoration(
+                        hintText: 'description',
+                      ),
                     ),
                   ),
-                ),
-                IconButton(
-                  icon: Icon(Icons.send),
-                  onPressed: _submitAnnouncement,
-                ),
-              ],
+                  IconButton(
+                    icon: Icon(Icons.send),
+                    onPressed: _submitAnnouncement,
+                  ),
+                ],
+              ),
             ),
-          ),
         ],
       ),
     );
