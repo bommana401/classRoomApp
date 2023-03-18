@@ -21,6 +21,9 @@ class _RegisterPageState extends State<RegisterPage> {
     final _firstName = TextEditingController();
     final _lastName = TextEditingController();
     final _roleController = TextEditingController();
+    final _volunteerHours = 0;
+    final _volunteerMinutes = 0;
+    List<dynamic> eventsSignedUp = <dynamic>[];
 
     // List of items in our dropdown menu
     var options = [
@@ -43,6 +46,7 @@ class _RegisterPageState extends State<RegisterPage> {
           password: _passwordsController.text.trim(),
         );
 
+        //
         User? user = result.user;
         if (user != null) {
           await firestore.collection("users").doc(user.uid).set({
@@ -50,7 +54,9 @@ class _RegisterPageState extends State<RegisterPage> {
             "lastName": _lastName.text.trim(),
             "email": _emailController.text.trim(),
             "role": _currentItemSelected,
-            "password": _passwordsController.text.trim()
+            "password": _passwordsController.text.trim(),
+            "hours": _volunteerHours,
+            "minutes": _volunteerMinutes,
           });
         }
       } on FirebaseAuthException catch (e) {
