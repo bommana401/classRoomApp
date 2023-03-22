@@ -47,6 +47,7 @@ class _RegisterPageState extends State<RegisterPage> {
         );
 
         //
+        //
         User? user = result.user;
         if (user != null) {
           await firestore.collection("users").doc(user.uid).set({

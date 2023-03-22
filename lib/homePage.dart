@@ -162,6 +162,8 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'announcements/announcementPage.dart';
 import 'events/eventsPage.dart';
 import 'profile.dart';
+import 'events/eventsPage.dart';
+import 'profile.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -271,6 +273,13 @@ class _HomePageState extends State<HomePage> {
               MaterialPageRoute(builder: (context) => HomePage()),
             );
           } else if (index == 1) {
+          if (index == 0) {
+            // check if the Announcements tab is tapped
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => HomePage()),
+            );
+          } else if (index == 1) {
             // check if the Announcements tab is tapped
             Navigator.push(
               context,
@@ -288,7 +297,20 @@ class _HomePageState extends State<HomePage> {
               context,
               MaterialPageRoute(builder: (context) => ProfilePage()),
             );
+          } else if (index == 2) {
+            // add this else-if block
+            // checks if profile button is pressed
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => EventsPage()),
+            );
+          } else if (index == 3) {
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => ProfilePage()),
+            );
           }
+
 
           // update the selected index to change the highlighted tab
           setState(() {
